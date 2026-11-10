@@ -1,0 +1,23 @@
+# BOOM SQUAD - Root Web Server Configuration
+# Supports deployment in root or any subdirectory on standard Apache/PHP hosting.
+
+Options -Indexes
+DirectoryIndex index.html index.php
+
+# Block direct HTTP requests to the /data/ directory and internal files
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^data(/.*)?$ - [F,L]
+    RewriteRule ^api/bootstrap\.php$ - [F,L]
+</IfModule>
+
+# Protect dotfiles (.htaccess, .git, etc.)
+<FilesMatch "^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

@@ -1,0 +1,13 @@
+# Disable directory listing in API directory
+Options -Indexes
+
+# Block direct HTTP access to internal bootstrap helper
+<Files "bootstrap.php">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</Files>

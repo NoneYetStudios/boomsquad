@@ -1,0 +1,42 @@
+[
+    {
+        "playerName": "BRENDA_HR",
+        "score": 64200,
+        "rank": "Director of Boom Mitigation",
+        "missionsCompleted": 22,
+        "longestStreak": 9,
+        "date": "2026-10-18"
+    },
+    {
+        "playerName": "GARY_NIGHTSHIFT",
+        "score": 41850,
+        "rank": "Principal Boom Engineer",
+        "missionsCompleted": 16,
+        "longestStreak": 7,
+        "date": "2026-10-24"
+    },
+    {
+        "playerName": "BASSLIFT_CHAMP99",
+        "score": 28900,
+        "rank": "Boom Analyst",
+        "missionsCompleted": 11,
+        "longestStreak": 6,
+        "date": "2026-11-01"
+    },
+    {
+        "playerName": "KEVIN_ACCOUNTING",
+        "score": 14500,
+        "rank": "Senior Boom Technician",
+        "missionsCompleted": 6,
+        "longestStreak": 4,
+        "date": "2026-11-03"
+    },
+    {
+        "playerName": "INTERN_TIMMY",
+        "score": 4200,
+        "rank": "Boom Technician",
+        "missionsCompleted": 3,
+        "longestStreak": 2,
+        "date": "2026-11-08"
+    }
+]

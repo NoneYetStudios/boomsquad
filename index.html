@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#090d14" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>BOOM SQUAD // STF Arcade — Department of Boom Prevention</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+    <!-- ==================================================
+         STF ARCADE PERSISTENT HEADER
+         ================================================== -->
+    <header class="stf-header">
+        <div class="stf-header-left">
+            <a id="stf-arcade-btn" href="https://arcade.stabthefinger.com/" class="stf-arcade-btn">
+                ◄ STF ARCADE
+            </a>
+            <div class="header-brand">
+                <h1 class="game-logo-title">BOOM SQUAD</h1>
+                <span class="game-logo-sub">DEPT. OF BOOM PREVENTION</span>
+            </div>
+        </div>
+        <div class="stf-header-right">
+            <span id="header-rank-badge" class="hud-pill rank-pill">JBT-1 // Junior Boom Technician</span>
+            <span id="header-streak-val" class="hud-pill streak-pill">STREAK: 0</span>
+            <div class="visor-hud-group" title="Department of Boom Prevention — Bomb Tech Visor Inspection Optics (Shortcut: M)">
+                <button id="header-visor-toggle" class="hud-btn visor-hud-btn" type="button">🔭 VISOR [M]: OFF</button>
+                <button id="header-visor-mag-btn" class="hud-btn visor-mag-pill" type="button" title="Cycle Inspection Optics Magnification (2x / 3x / 4x)">2x OPTICS</button>
+            </div>
+            <button id="header-voice-toggle" class="hud-btn" type="button">🔊 DISPATCH VOICE: ON</button>
+            <button id="header-home-btn" class="hud-btn" type="button" title="Return to Main Menu">🏠 MENU</button>
+        </div>
+    </header>
+
+    <!-- ==================================================
+         MAIN WORKSPACE CONTAINER
+         ================================================== -->
+    <main class="main-stage">
+
+        <!-- 1. MAIN MENU SCREEN -->
+        <section id="screen-menu" class="game-screen active">
+            <div class="menu-hero-panel">
+                <div class="hero-stamp">FORM DBP-109 // AUTHORIZED PERSONNEL ONLY</div>
+                <h2 class="hero-headline">BOOM SQUAD</h2>
+                <p class="hero-tagline">
+                    Responding to unauthorized countdown appliances, volatile lunchboxes,
+                    explosive decorative gourds, and corporate breakroom fish incidents since Tuesday.
+                </p>
+
+                <!-- Department of Boom Prevention Personnel Record / Operator Call Sign Bar -->
+                <div id="menu-operator-card" class="menu-operator-card">
+                    <div class="operator-card-header">
+                        <span class="operator-record-tag">🪪 DEPARTMENT OF BOOM PREVENTION PERSONNEL RECORD</span>
+                        <span id="menu-operator-rank-pill" class="operator-clearance-pill">CLEARANCE: LEVEL 1</span>
+                    </div>
+
+                    <div id="menu-operator-view-row" class="operator-view-row">
+                        <div class="operator-designation-line">
+                            <span class="operator-label">Operator designation:</span>
+                            <strong id="menu-operator-name-display" class="operator-callsign-badge">TECH-404</strong>
+                        </div>
+                        <button id="btn-toggle-menu-operator-edit" class="btn-retry btn-edit-callsign" type="button">
+                            ✏️ EDIT CALL SIGN
+                        </button>
+                    </div>
+
+                    <div id="menu-operator-edit-row" class="operator-edit-row" style="display: none;">
+                        <label for="menu-operator-name-input" class="operator-edit-label">Enter Technician Call Sign:</label>
+                        <div class="operator-edit-controls">
+                            <input
+                                id="menu-operator-name-input"
+                                type="text"
+                                maxlength="24"
+                                class="opt-input operator-inline-input"
+                                placeholder="Enter Technician Call Sign"
+                                autocomplete="off"
+                            />
+                            <button id="btn-random-menu-operator" class="btn-secondary btn-small" type="button" title="Generate STF Call Sign">
+                                🎲 RANDOM
+                            </button>
+                            <button id="btn-save-menu-operator" class="btn-primary btn-small" type="button">
+                                ✓ SAVE CALL SIGN
+                            </button>
+                            <button id="btn-cancel-menu-operator" class="btn-secondary btn-small" type="button">
+                                CANCEL
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="menu-operator-feedback" class="operator-feedback-note" style="display: none;"></div>
+                </div>
+
+                <div class="menu-buttons-grid">
+                    <button id="btn-start-mission" class="menu-btn primary-cta" type="button">
+                        <span class="btn-icon">🚨</span>
+                        <span class="btn-text">
+                            <strong>START MISSION</strong>
+                            <small>Procedural Field Deployment</small>
+                        </span>
+                    </button>
+
+                    <button id="btn-training" class="menu-btn" type="button">
+                        <span class="btn-icon">🎓</span>
+                        <span class="btn-text">
+                            <strong>TRAINING</strong>
+                            <small>8-Chapter Orientation Campaign</small>
+                        </span>
+                    </button>
+
+                    <button id="btn-highscores" class="menu-btn" type="button">
+                        <span class="btn-icon">🏆</span>
+                        <span class="btn-text">
+                            <strong>HIGH SCORES</strong>
+                            <small>STF Online &amp; Local Leaderboards</small>
+                        </span>
+                    </button>
+
+                    <button id="btn-statistics" class="menu-btn" type="button">
+                        <span class="btn-icon">📊</span>
+                        <span class="btn-text">
+                            <strong>STATISTICS</strong>
+                            <small>Service Record &amp; Promotions</small>
+                        </span>
+                    </button>
+
+                    <button id="btn-achievements" class="menu-btn" type="button">
+                        <span class="btn-icon">🎖️</span>
+                        <span class="btn-text">
+                            <strong>ACHIEVEMENTS</strong>
+                            <small>Departmental Commendations</small>
+                        </span>
+                    </button>
+
+                    <button id="btn-options" class="menu-btn" type="button">
+                        <span class="btn-icon">⚙️</span>
+                        <span class="btn-text">
+                            <strong>OPTIONS</strong>
+                            <small>Audio, Voice, Difficulty &amp; Save Data</small>
+                        </span>
+                    </button>
+
+                    <button id="btn-credits" class="menu-btn full-span" type="button">
+                        <span class="btn-icon">📄</span>
+                        <span class="btn-text">
+                            <strong>CREDITS &amp; BUREAU OVERSIGHT</strong>
+                            <small>STF Shared Universe Agencies &amp; Legal Disclaimers</small>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. TRAINING MODE SCREEN -->
+        <section id="screen-training" class="game-screen">
+            <div class="panel-card">
+                <div class="panel-header-row">
+                    <h2>ORIENTATION &amp; TRAINING CAMPAIGN</h2>
+                    <div class="panel-header-actions">
+                        <button id="training-visor-demo-btn" class="btn-retry" type="button">🔭 TEST BOMB TECH VISOR [M]</button>
+                        <button id="btn-training-logic-ref" class="btn-retry" type="button">📖 FIELD MANUAL: LOGIC CHEAT SHEET</button>
+                        <button class="btn-secondary btn-back-menu" type="button">◄ BACK TO MENU</button>
+                    </div>
+                </div>
+                <p class="panel-subtext">
+                    A structured 8-chapter tutorial campaign designed for technicians with zero prior experience.
+                    Each chapter introduces <b>exactly one new system</b> while reinforcing previous lessons.
+                    <br /><span class="visor-training-tip">🔭 <b>EQUIPMENT TIP:</b> Press <b>[M]</b> or click <b>VISOR</b> in the top HUD at any time to engage your <b>Bomb Tech Visor (2x / 3x / 4x Inspection Optics)</b> while interacting with modules!</span>
+                </p>
+
+                <!-- Campaign Progression Banner -->
+                <div id="training-campaign-banner" class="training-campaign-banner">
+                    <div class="campaign-progress-info">
+                        <span id="training-campaign-status" class="campaign-status-pill">CAMPAIGN PROGRESS: 0 / 8 CERTIFIED</span>
+                        <p id="training-campaign-next-desc" class="campaign-next-text">
+                            Begin with Training 101 to learn how to read module protocol strips and Chassis HUD telemetry.
+                        </p>
+                    </div>
+                    <button id="btn-continue-campaign" class="btn-primary" type="button">
+                        ▶ START NEXT LESSON
+                    </button>
+                </div>
+
+                <div id="training-missions-list" class="training-list"></div>
+            </div>
+        </section>
+
+        <!-- 3. MISSION BRIEFING SCREEN -->
+        <section id="screen-briefing" class="game-screen">
+            <div class="dossier-card">
+                <div class="dossier-top-bar">
+                    <span id="briefing-incident-id" class="dossier-id">INCIDENT #1007</span>
+                    <span id="briefing-fish-alert" class="fish-alert-badge" style="display: none;">
+                        🐟 CLASS-4 BREAKROOM FISH INCIDENT
+                    </span>
+                    <span id="briefing-stamp" class="dossier-stamp">URGENT DISPATCH</span>
+                </div>
+
+                <div class="dossier-grid">
+                    <div class="dossier-field">
+                        <label>INCIDENT LOCATION</label>
+                        <strong id="briefing-location">Corporate Breakroom Refrigerator</strong>
+                    </div>
+                    <div class="dossier-field">
+                        <label>REPORTED DEVICE TYPE</label>
+                        <strong id="briefing-device">Suspicious Container</strong>
+                    </div>
+                    <div class="dossier-field">
+                        <label>COMPLEXITY TELEMETRY</label>
+                        <strong id="briefing-module-count">2 ACTIVE MODULES</strong>
+                    </div>
+                    <div class="dossier-field">
+                        <label>ESTIMATED DETONATION WINDOW</label>
+                        <strong id="briefing-time-limit" class="text-amber">120 SECONDS</strong>
+                    </div>
+                </div>
+
+                <div class="dossier-description-box">
+                    <label id="briefing-desc-label">FIELD SITUATION REPORT</label>
+                    <p id="briefing-description"></p>
+                </div>
+
+                <!-- DEPARTMENT OF BOOM PREVENTION DIFFICULTY DIAL (1–11) -->
+                <div id="briefing-difficulty-dial-panel" class="difficulty-dial-panel">
+                    <div class="difficulty-dial-header">
+                        <div class="dial-header-left">
+                            <span class="dial-equipment-tag">DEPT. OF BOOM PREVENTION // CHASSIS REGULATOR MK-XI</span>
+                            <h3 class="dial-title">HAZARD DIFFICULTY DIAL (1–11)</h3>
+                        </div>
+                        <div class="dial-header-right">
+                            <span id="dial-auto-advance-badge" class="dial-auto-badge" style="display: none;">
+                                ▲ CAMPAIGN ESCALATION (+1 LEVEL)
+                            </span>
+                            <span id="dial-tier-badge" class="dial-tier-badge">LEVEL 02 // STANDARD REGULATION</span>
+                        </div>
+                    </div>
+
+                    <div class="difficulty-dial-body">
+                        <!-- Left: Physical Rotary Knob & 1-11 Detent Ring -->
+                        <div class="rotary-dial-stage">
+                            <div class="rotary-dial-housing" id="difficulty-rotary-housing">
+                                <!-- Radial Detent Buttons 1 to 11 -->
+                                <div class="rotary-detent-ring" role="radiogroup" aria-label="Difficulty Dial Level 1 to 11">
+                                    <button type="button" class="dial-detent-btn" data-dial="1" style="--detent-angle: -135deg;" title="Dial 1: Intern Probation">1</button>
+                                    <button type="button" class="dial-detent-btn" data-dial="2" style="--detent-angle: -108deg;" title="Dial 2: Junior Field Duty">2</button>
+                                    <button type="button" class="dial-detent-btn" data-dial="3" style="--detent-angle: -81deg;" title="Dial 3: Standard Regulation">3</button>
+                                    <button type="button" class="dial-detent-btn" data-dial="4" style="--detent-angle: -54deg;" title="Dial 4: Elevated Compliance">4</button>
+                                    <button type="button" class="dial-detent-btn" data-dial="5" style="--detent-angle: -27deg;" title="Dial 5: Senior Tactical">5</button>
+                                    <button type="button" class="dial-detent-btn" data-dial="6" style="--detent-angle: 0deg;" title="Dial 6: High-Pressure Shift">6</button>
+                                    <button type="button" class="dial-detent-btn" data-dial="7" style="--detent-angle: 27deg;" title="Dial 7: Overtime Protocol">7</button>
+                                    <button type="button" class="dial-detent-btn" data-dial="8" style="--detent-angle: 54deg;" title="Dial 8: Hazard Pay Grade">8</button>
+                                    <button type="button" class="dial-detent-btn" data-dial="9" style="--detent-angle: 81deg;" title="Dial 9: Containment Critical">9</button>
+                                    <button type="button" class="dial-detent-btn" data-dial="10" style="--detent-angle: 108deg;" title="Dial 10: Executive Crisis">10</button>
+                                    <button type="button" class="dial-detent-btn dial-detent-11" data-dial="11" style="--detent-angle: 135deg;" title="Dial 11: Unsanctioned Eleven">11</button>
+                                </div>
+
+                                <!-- Physical Rotating Selector Knob -->
+                                <div id="difficulty-rotary-knob" class="rotary-dial-knob" style="--knob-rotation: -108deg;" title="Click or use [-]/[+] to rotate Difficulty Dial">
+                                    <div class="rotary-knob-grip"></div>
+                                    <div id="difficulty-rotary-pointer" class="rotary-knob-pointer"></div>
+                                    <div class="rotary-knob-cap">
+                                        <span class="knob-cap-sub">DIAL</span>
+                                        <strong id="difficulty-rotary-center-val" class="knob-cap-val">02</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="rotary-step-controls">
+                                <button id="btn-dial-dec" class="btn-secondary btn-small dial-step-btn" type="button" title="Decrease Difficulty Dial">◄ -1 STEP</button>
+                                <span class="dial-step-label">ROTARY DETENT</span>
+                                <button id="btn-dial-inc" class="btn-secondary btn-small dial-step-btn" type="button" title="Increase Difficulty Dial">+1 STEP ►</button>
+                            </div>
+                        </div>
+
+                        <!-- Right: Live Difficulty Telemetry & STF Dispatch Commentary -->
+                        <div class="difficulty-dial-info">
+                            <div class="dial-telemetry-grid">
+                                <div class="dial-stat-card">
+                                    <small>SCORE MULTIPLIER</small>
+                                    <strong id="dial-score-mult" class="text-green">0.85x</strong>
+                                </div>
+                                <div class="dial-stat-card">
+                                    <small>STRIKE TOLERANCE</small>
+                                    <strong id="dial-strikes-val" class="text-amber">4 STRIKES</strong>
+                                </div>
+                                <div class="dial-stat-card">
+                                    <small>PUZZLE / CLUE TIER</small>
+                                    <strong id="dial-puzzle-tier">TIER 1 // DIRECT</strong>
+                                </div>
+                                <div class="dial-stat-card">
+                                    <small>DISPATCH RELIABILITY</small>
+                                    <strong id="dial-dispatch-rel">96% CLEAR</strong>
+                                </div>
+                            </div>
+
+                            <div id="dial-summary-text" class="dial-summary-box">
+                                Standard entry deployment. 1–2 modules with direct clues and comfortable clock margin.
+                            </div>
+
+                            <div id="dial-eleven-warning" class="dial-eleven-banner">
+                                🔧 <strong>CHASSIS INTERLOCK BUS:</strong> Standard regulation module isolation active (Levels 01–10).
+                            </div>
+
+                            <div class="dial-dispatch-box">
+                                <span class="dial-dispatch-tag">📻 DISPATCH DIAL ADVISORY:</span>
+                                <p id="dial-dispatch-commentary" class="dial-dispatch-quote">
+                                    "Dial set to 2. Standard junior technician workload. Try not to drop your pliers."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Campaign Instructional Guide & Mission Objective Panel (Shown before beginning each Training Mission) -->
+                <div id="briefing-training-panel" class="briefing-training-panel" style="display: none;">
+                    <div class="training-concept-row">
+                        <span id="briefing-new-concept" class="concept-pill new-concept">🎯 NEW CONCEPT: Wire Panel</span>
+                        <span id="briefing-reinforces" class="concept-pill reinforces">🔁 REINFORCES: Core Interface</span>
+                    </div>
+
+                    <div class="training-instructions-box">
+                        <div class="training-subhead">📋 STEP-BY-STEP INSTRUCTIONAL BRIEFING (READ BEFORE STARTING)</div>
+                        <div id="briefing-training-instructions" class="training-steps-list"></div>
+                    </div>
+
+                    <div class="mission-objective-panel">
+                        <div class="objective-panel-title">🎓 MISSION OBJECTIVE PANEL</div>
+                        <div class="objective-grid">
+                            <div class="objective-card learning">
+                                <small>🎯 WHAT YOU ARE LEARNING</small>
+                                <p id="briefing-obj-learning"></p>
+                            </div>
+                            <div class="objective-card success">
+                                <small>✅ WHAT SUCCESS LOOKS LIKE</small>
+                                <p id="briefing-obj-success"></p>
+                            </div>
+                            <div class="objective-card mistakes">
+                                <small>⚠️ COMMON MISTAKES TO AVOID</small>
+                                <p id="briefing-obj-mistakes"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dossier-actions">
+                    <button class="btn-secondary btn-back-menu" type="button">DECLINE &amp; RETURN TO MENU</button>
+                    <button id="btn-deploy-incident" class="btn-primary btn-large-deploy" type="button">
+                        ⚡ DEPLOY TO INCIDENT &amp; START CLOCK
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ACTIVE GAMEPLAY / DEFUSAL SCREEN -->
+        <section id="screen-game" class="game-screen">
+            <!-- Top Chassis Telemetry HUD -->
+            <div class="chassis-hud">
+                <div class="chassis-clock-box">
+                    <span class="clock-label">DETONATION TIMER</span>
+                    <div id="countdown-clock" class="digital-clock">02:00.0</div>
+                </div>
+
+                <div class="chassis-strikes-box">
+                    <span class="clock-label">STRIKES</span>
+                    <div id="strikes-indicators" class="strikes-row"></div>
+                </div>
+
+                <div class="chassis-info-box">
+                    <div class="chassis-device-line">
+                        <strong id="hud-device-name">Suspicious Container</strong>
+                        <span id="hud-device-location" class="loc-tag">Corporate Breakroom</span>
+                    </div>
+                    <div class="chassis-widgets-row">
+                        <span class="chassis-tag">S/N: <b id="chassis-serial">AB4-K92</b></span>
+                        <span class="chassis-tag">PWR: <b id="chassis-batteries">2 CELLS</b></span>
+                        <span class="chassis-tag">PORT: <b id="chassis-port">PARALLEL</b></span>
+                        <span class="chassis-tag" id="hud-modules-progress">0 / 2 DISARMED</span>
+                    </div>
+                </div>
+
+                <div class="chassis-actions-box">
+                    <div class="chassis-visor-group" title="Bomb Tech Visor Inspection Optics (Press M to toggle)">
+                        <button id="chassis-visor-toggle" class="btn-tactical visor-hud-btn" type="button">🔭 VISOR: OFF [M]</button>
+                        <button id="chassis-visor-mag-btn" class="btn-tactical visor-mag-pill" type="button" title="Cycle Optics Magnification (2x / 3x / 4x)">2x</button>
+                        <button id="chassis-visor-focus-btn" class="btn-tactical visor-focus-pill" type="button" title="Toggle Focus Inspection Mode (Shift+M)">🎯 FOCUS: OFF</button>
+                    </div>
+                    <button id="btn-toggle-manual" class="btn-tactical" type="button">📖 FIELD MANUAL</button>
+                    <button id="btn-abort-mission" class="btn-tactical danger" type="button">ABORT</button>
+                </div>
+            </div>
+
+            <!-- Collapsible Quick-Reference Field Manual Drawer -->
+            <div id="field-manual-drawer" class="manual-drawer">
+                <div class="manual-drawer-inner">
+                    <div class="manual-col">
+                        <h4>✂️ WIRES &amp; 🔢 KEYPAD</h4>
+                        <p>Each module prints its active rule along the bottom strip. Check Chassis <b>S/N last digit</b> (Even/Odd) and <b>PWR Battery count</b> on the top HUD bar when requested.</p>
+                    </div>
+                    <div class="manual-col">
+                        <h4>📡 FREQUENCY &amp; 🎛️ SWITCHES</h4>
+                        <p><b>Frequency:</b> Match both MHz value and Waveform shape (Sine, Square, Triangle) to the green target wave. <b>Switches:</b> Flip in exact KVA order.</p>
+                    </div>
+                    <div class="manual-col">
+                        <h4>FIELD MANUAL // BOOLEAN LOGIC CHEAT SHEET</h4>
+                        <div class="manual-cheat-sheet">
+                            <div><b>AND:</b> Both conditions required.</div>
+                            <div><b>OR:</b> Either condition required.</div>
+                            <div><b>NOT:</b> Reverse condition.</div>
+                            <div><b>XOR:</b> Exactly one condition required.</div>
+                            <div><b>NAND:</b> Anything except both.</div>
+                        </div>
+                        <button id="btn-manual-logic-ref" class="btn-inline-logic-ref" type="button">📖 Open Field Manual: Boolean Logic Cheat Sheet</button>
+                    </div>
+                    <div class="manual-col">
+                        <h4>🧠 MEMORY &amp; 🚨 OVERRIDE</h4>
+                        <p><b>Memory:</b> Remember both the <i>Position</i> (1–4) and <i>Label</i> you press in Stage 1 &amp; 2. <b>Override:</b> Auth Sum = S/N Last Digit + Batteries + Total Modules.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Training Mission Objective Panel (Displayed during Training Mode gameplay) -->
+            <div id="active-training-objective-panel" class="active-training-objective-panel" style="display: none;">
+                <div class="active-obj-header">
+                    <div class="active-obj-badges">
+                        <span id="active-obj-chapter" class="campaign-status-pill">CHAPTER 1 OF 8</span>
+                        <span id="active-obj-new-concept" class="concept-pill new-concept">🎯 NEW CONCEPT</span>
+                        <span id="active-obj-reinforces" class="concept-pill reinforces">🔁 REINFORCES</span>
+                    </div>
+                    <button id="btn-toggle-active-obj" class="btn-tactical" type="button" aria-expanded="true">
+                        ▲ HIDE OBJECTIVE GUIDE
+                    </button>
+                </div>
+                <div id="active-obj-body" class="active-obj-body">
+                    <div class="objective-grid compact-grid">
+                        <div class="objective-card learning">
+                            <small>🎯 WHAT YOU ARE LEARNING</small>
+                            <p id="active-obj-learning"></p>
+                        </div>
+                        <div class="objective-card success">
+                            <small>✅ WHAT SUCCESS LOOKS LIKE</small>
+                            <p id="active-obj-success"></p>
+                        </div>
+                        <div class="objective-card mistakes">
+                            <small>⚠️ COMMON MISTAKES</small>
+                            <p id="active-obj-mistakes"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Split Layout: Live Radio Dispatch + Tactile Bomb Modules -->
+            <div class="gameplay-workspace">
+                <!-- Left/Top: Radio Dispatch Panel -->
+                <aside class="dispatch-panel">
+                    <div class="dispatch-header">
+                        <div class="dispatch-title-row">
+                            <span class="radio-icon">📻</span>
+                            <div>
+                                <h3>RADIO DISPATCH</h3>
+                                <span id="dispatch-live-indicator" class="dispatch-status-badge">STANDBY // CHANNEL OPEN</span>
+                            </div>
+                        </div>
+                        <div id="dispatch-waveform" class="waveform-bars">
+                            <span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+
+                    <div class="dispatch-featured-box">
+                        <div id="dispatch-current-sender" class="dispatch-sender-line">[00:00:00] DISPATCH CENTRAL</div>
+                        <div id="dispatch-current-text" class="dispatch-headline">
+                            "Boom Squad, we have reports of an unauthorized countdown appliance."
+                        </div>
+                    </div>
+
+                    <div class="dispatch-controls-row">
+                        <button id="btn-request-hint" class="btn-hint-assist" type="button">
+                            💡 REQUEST MANUAL HINT
+                        </button>
+                        <button id="btn-toggle-dispatch-log" class="btn-dispatch-log-toggle" type="button" aria-expanded="false">
+                            📋 LOG &amp; TELEMETRY
+                        </button>
+                    </div>
+
+                    <div id="dispatch-collapsible-body" class="dispatch-collapsible-body">
+                        <div class="dispatch-telemetry-strip">
+                            <div class="tele-box">
+                                <small>CONFIDENCE</small>
+                                <strong id="dispatch-confidence-val">38%</strong>
+                            </div>
+                            <div class="tele-box">
+                                <small>MANUAL STATUS</small>
+                                <strong id="dispatch-manual-val">Written in Crayon</strong>
+                            </div>
+                        </div>
+
+                        <div class="dispatch-log-title">TRANSMISSION LOG</div>
+                        <div id="dispatch-log" class="dispatch-log-scroll"></div>
+                        <div id="hud-status-ticker" class="status-ticker-bar">SYS-STATUS: Nominal</div>
+                    </div>
+                </aside>
+
+                <!-- Right/Main: Procedural Device Casing & Modules Grid -->
+                <section class="device-casing-area">
+                    <div id="device-modules-grid" class="modules-grid"></div>
+                </section>
+            </div>
+        </section>
+
+        <!-- 5. POST-MISSION RESULT & SCORE SCREEN -->
+        <section id="screen-result" class="game-screen">
+            <div class="panel-card result-card">
+                <div id="result-status-banner" class="result-banner success">
+                    INCIDENT CONTAINED // DEVICE NEUTRALIZED
+                </div>
+
+                <!-- Failure Diagnostic & Incident Timeline Section (Displayed on Mission Failure) -->
+                <div id="failure-analysis-section" class="failure-analysis-box" style="display: none;">
+                    <div id="failure-type-pills" class="failure-type-pills-row"></div>
+
+                    <div class="failure-diagnostics-grid">
+                        <div class="failure-diag-card immediate">
+                            <small>⚠️ IMMEDIATE CAUSE</small>
+                            <p id="failure-immediate-cause"></p>
+                        </div>
+                        <div class="failure-diag-card assessment">
+                            <small>📻 DISPATCH ASSESSMENT</small>
+                            <p id="failure-dispatch-assessment"></p>
+                        </div>
+                    </div>
+
+                    <div class="failure-timeline-box">
+                        <div class="timeline-header">⏱️ INCIDENT TELEMETRY TIMELINE</div>
+                        <div id="failure-timeline-list" class="failure-timeline-list"></div>
+                    </div>
+                </div>
+
+                <div class="result-report-box">
+                    <small id="result-report-title">OFFICIAL AFTER-ACTION REPORT:</small>
+                    <p id="result-flavor-report" class="result-flavor-quote">Gravy threat neutralized.</p>
+                </div>
+
+                <!-- Training Mode Debrief Section (Displayed only after a failed Training Mission) -->
+                <div id="training-debrief-section" class="training-debrief-box" style="display: none;">
+                    <div class="debrief-header">
+                        <span class="debrief-badge">🎓 TRAINING DEBRIEF // LEARNING OPPORTUNITY</span>
+                        <p id="debrief-failure-reason" class="debrief-failure-summary"></p>
+                    </div>
+                    <div id="training-debrief-cards" class="debrief-cards-list"></div>
+                </div>
+
+                <div class="score-breakdown-grid">
+                    <div class="score-row">
+                        <span>Module Neutralization Base</span>
+                        <strong id="score-base">1,000 PTS</strong>
+                    </div>
+                    <div class="score-row">
+                        <span>Remaining Time Bonus</span>
+                        <strong id="score-time">+1,500 PTS</strong>
+                    </div>
+                    <div class="score-row">
+                        <span>Precision / Zero-Strike Bonus</span>
+                        <strong id="score-accuracy">+600 PTS</strong>
+                    </div>
+                    <div class="score-row">
+                        <span>Active Multipliers</span>
+                        <strong id="score-multipliers">1.0x Streak × 1.0x Diff</strong>
+                    </div>
+                    <div class="score-row total-row">
+                        <span>MISSION TOTAL SCORE</span>
+                        <strong id="score-total">3,100 PTS</strong>
+                    </div>
+                    <div class="score-row">
+                        <span>Cumulative Career Score</span>
+                        <strong id="score-career">3,100 PTS</strong>
+                    </div>
+                </div>
+
+                <div id="result-rank-display" class="rank-callout">
+                    CURRENT RANK: <b>Junior Boom Technician</b>
+                </div>
+
+                <div id="result-leaderboard-status" class="lb-submit-note">
+                    ✓ Score logged to leaderboard
+                </div>
+
+                <div class="result-actions-row">
+                    <button id="btn-result-menu" class="btn-secondary" type="button">MAIN MENU</button>
+                    <button id="btn-result-leaderboard" class="btn-secondary" type="button">🏆 LEADERBOARD</button>
+                    <button id="btn-retry-incident" class="btn-retry" type="button">🔄 RETRY INCIDENT</button>
+                    <button id="btn-next-mission" class="btn-primary" type="button">NEXT INCIDENT ►</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. HIGH SCORES / LEADERBOARD SCREEN -->
+        <section id="screen-highscores" class="game-screen">
+            <div class="panel-card">
+                <div class="panel-header-row">
+                    <div>
+                        <h2>STF DEPARTMENTAL LEADERBOARD</h2>
+                        <small id="leaderboard-conn-status" class="conn-badge">CONNECTED</small>
+                    </div>
+                    <button class="btn-secondary btn-back-menu" type="button">◄ BACK TO MENU</button>
+                </div>
+
+                <div class="leaderboard-operator-bar">
+                    <div>
+                        <span class="operator-label">Operator designation:</span>
+                        <strong id="lb-current-operator-name" class="operator-callsign-badge">TECH-404</strong>
+                    </div>
+                    <button id="btn-leaderboard-change-callsign" class="btn-retry btn-small" type="button">
+                        ✏️ CHANGE CALL SIGN
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="stf-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>OPERATOR CALL SIGN</th>
+                                <th>BEST SCORE</th>
+                                <th>CORPORATE RANK</th>
+                                <th>COMPLETED (STREAK)</th>
+                                <th>DATE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. STATISTICS SCREEN -->
+        <section id="screen-statistics" class="game-screen">
+            <div class="panel-card">
+                <div class="panel-header-row">
+                    <h2>DEPARTMENT OF BOOM PREVENTION PERSONNEL RECORD &amp; RANKS</h2>
+                    <button class="btn-secondary btn-back-menu" type="button">◄ BACK TO MENU</button>
+                </div>
+                <div id="stats-grid-container" class="stats-grid"></div>
+            </div>
+        </section>
+
+        <!-- 8. ACHIEVEMENTS SCREEN -->
+        <section id="screen-achievements" class="game-screen">
+            <div class="panel-card">
+                <div class="panel-header-row">
+                    <h2>DEPARTMENTAL COMMENDATIONS &amp; ACHIEVEMENTS</h2>
+                    <button class="btn-secondary btn-back-menu" type="button">◄ BACK TO MENU</button>
+                </div>
+                <div id="achievements-grid-container" class="achievements-grid"></div>
+            </div>
+        </section>
+
+        <!-- 9. OPTIONS SCREEN -->
+        <section id="screen-options" class="game-screen">
+            <div class="panel-card">
+                <div class="panel-header-row">
+                    <h2>SYSTEM CONFIGURATION &amp; HR PAPERWORK</h2>
+                    <button class="btn-secondary btn-back-menu" type="button">◄ BACK TO MENU</button>
+                </div>
+
+                <div class="options-form">
+                    <div class="opt-row">
+                        <label for="opt-player-name">
+                            Operator Designation / Technician Call Sign
+                            <small class="opt-field-sub">Department of Boom Prevention personnel record (Also editable on Main Menu)</small>
+                        </label>
+                        <input id="opt-player-name" type="text" maxlength="24" class="opt-input" placeholder="Enter Technician Call Sign" />
+                    </div>
+
+                    <div class="opt-row">
+                        <label for="opt-voice-enabled">Radio Dispatch Spoken Voice (SpeechSynthesis)</label>
+                        <input id="opt-voice-enabled" type="checkbox" class="opt-checkbox" />
+                    </div>
+
+                    <div class="opt-row">
+                        <label for="opt-voice-volume">Dispatch Voice Volume</label>
+                        <div class="opt-slider-group">
+                            <input id="opt-voice-volume" type="range" min="0" max="1" step="0.05" />
+                            <button id="btn-test-dispatch-voice" class="btn-secondary btn-small" type="button">TEST VOICE</button>
+                        </div>
+                    </div>
+
+                    <div class="opt-row">
+                        <label for="opt-music-volume">Background Synth Volume</label>
+                        <input id="opt-music-volume" type="range" min="0" max="1" step="0.05" />
+                    </div>
+
+                    <div class="opt-row">
+                        <label for="opt-sfx-volume">Tactical Sound Effects Volume</label>
+                        <input id="opt-sfx-volume" type="range" min="0" max="1" step="0.05" />
+                    </div>
+
+                    <div class="opt-row">
+                        <label for="opt-difficulty">
+                            Department of Boom Prevention Difficulty Dial (1–11)
+                            <small class="opt-field-sub">Also adjustable via the rotary dial on the Incident Briefing screen</small>
+                        </label>
+                        <select id="opt-difficulty" class="opt-select">
+                            <option value="1">Dial 01 — Intern Probation (0.70x Score, 4 Strikes)</option>
+                            <option value="2">Dial 02 — Junior Field Duty (0.85x Score, 4 Strikes)</option>
+                            <option value="3">Dial 03 — Standard Regulation (1.00x Score, 3 Strikes)</option>
+                            <option value="4">Dial 04 — Elevated Compliance (1.15x Score, 3 Strikes)</option>
+                            <option value="5">Dial 05 — Senior Tactical (1.35x Score, 3 Strikes)</option>
+                            <option value="6">Dial 06 — High-Pressure Shift (1.55x Score, 3 Strikes)</option>
+                            <option value="7">Dial 07 — Overtime Protocol (1.80x Score, 3 Strikes)</option>
+                            <option value="8">Dial 08 — Hazard Pay Grade (2.10x Score, 2 Strikes)</option>
+                            <option value="9">Dial 09 — Containment Critical (2.45x Score, 2 Strikes)</option>
+                            <option value="10">Dial 10 — Executive Crisis (2.85x Score, 2 Strikes)</option>
+                            <option value="11">Dial 11 — Unsanctioned Eleven (3.50x Score, 2 Strikes, Special Tier)</option>
+                        </select>
+                    </div>
+
+                    <div class="opt-row">
+                        <label for="opt-online-leaderboard">Online Leaderboard Auto-Submit</label>
+                        <input id="opt-online-leaderboard" type="checkbox" class="opt-checkbox" />
+                    </div>
+
+                    <hr class="opt-divider" />
+
+                    <div class="opt-row">
+                        <label for="opt-visor-always-on">Bomb Tech Visor: Always-On Inspection Optics</label>
+                        <input id="opt-visor-always-on" type="checkbox" class="opt-checkbox" />
+                    </div>
+
+                    <div class="opt-row">
+                        <label for="opt-visor-magnification">Bomb Tech Visor: Optical Magnification Power</label>
+                        <select id="opt-visor-magnification" class="opt-select">
+                            <option value="2">2.0x Tactical Optics (Standard)</option>
+                            <option value="3">3.0x High-Precision Optics</option>
+                            <option value="4">4.0x Micro-Circuit Inspection Optics</option>
+                        </select>
+                    </div>
+
+                    <div class="opt-row">
+                        <label for="opt-visor-focus-mode">Bomb Tech Visor: Focus Inspection Mode (Darken Screen &amp; Lock Clicks)</label>
+                        <input id="opt-visor-focus-mode" type="checkbox" class="opt-checkbox" />
+                    </div>
+
+                    <hr class="opt-divider" />
+
+                    <div class="opt-danger-zone">
+                        <button id="btn-reset-progress" class="btn-danger" type="button">RESET PROGRESS &amp; ACHIEVEMENTS</button>
+                        <button id="btn-reset-stats" class="btn-danger" type="button">RESET CAREER STATISTICS</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. CREDITS SCREEN -->
+        <section id="screen-credits" class="game-screen">
+            <div class="panel-card">
+                <div class="panel-header-row">
+                    <h2>CREDITS &amp; INTER-AGENCY OVERSIGHT</h2>
+                    <button class="btn-secondary btn-back-menu" type="button">◄ BACK TO MENU</button>
+                </div>
+                <div class="credits-content">
+                    <h3>BOOM SQUAD // STF ARCADE</h3>
+                    <p>Developed for the <b>Department of Boom Prevention</b> and <b>STF Arcade</b>.</p>
+                    <p>In cooperation with the following oversight bodies:</p>
+                    <ul class="credits-org-list">
+                        <li>Basslift Competition Committee</li>
+                        <li>United Poultry Emergency Office</li>
+                        <li>Department of Excessive Gravy</li>
+                        <li>Municipal Aquarium Oversight Board</li>
+                        <li>Turkey Preparedness Agency</li>
+                        <li>Decorative Gourd Safety Council</li>
+                        <li>Office of Recreational Chickens</li>
+                    </ul>
+                    <p class="legal-footnote">
+                        No actual fish dishes, decorative gourds, or municipal mayors were harmed during the production of this simulation.
+                        Please remember to label all items placed in the Corporate Breakroom Refrigerator.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Field Manual: Boolean Logic Cheat Sheet Modal (Accessible from Training, Field Manual, and Active Logic Modules) -->
+    <div id="logic-reference-modal" class="logic-ref-modal" aria-hidden="true">
+        <div class="logic-ref-dialog">
+            <div class="logic-ref-header">
+                <div>
+                    <span class="logic-ref-tag">FIELD MANUAL // DEPARTMENT OF BOOM PREVENTION</span>
+                    <h3>BOOLEAN LOGIC CHEAT SHEET</h3>
+                </div>
+                <button id="btn-close-logic-ref" class="btn-secondary" type="button">✕ CLOSE</button>
+            </div>
+
+            <div class="logic-ref-key-banner">
+                💡 <strong>KEY RULE:</strong> In all Logic Symbols circuits, <b>1 = TRUE (Condition Met)</b> and <b>0 = FALSE (Condition Not Met)</b>.
+            </div>
+
+            <pre class="field-manual-ascii-sheet">FIELD MANUAL
+----------------
+
+BOOLEAN LOGIC CHEAT SHEET
+
+AND:
+Both conditions required.
+
+OR:
+Either condition required.
+
+NOT:
+Reverse condition.
+
+XOR:
+Exactly one condition required.
+
+NAND:
+Anything except both.</pre>
+
+            <div class="logic-ref-grid">
+                <div class="logic-op-card">
+                    <div class="logic-op-title">AND:</div>
+                    <p class="logic-op-desc"><b>Both conditions required.</b> (TRUE only if both inputs are TRUE.)</p>
+                    <div class="logic-op-examples">
+                        <span>TRUE (1) + TRUE (1) = <b>TRUE (1)</b></span>
+                        <span>TRUE (1) + FALSE (0) = <b>FALSE (0)</b></span>
+                        <span>FALSE (0) + FALSE (0) = <b>FALSE (0)</b></span>
+                    </div>
+                </div>
+
+                <div class="logic-op-card">
+                    <div class="logic-op-title">OR:</div>
+                    <p class="logic-op-desc"><b>Either condition required.</b> (TRUE if either input is TRUE.)</p>
+                    <div class="logic-op-examples">
+                        <span>TRUE (1) + FALSE (0) = <b>TRUE (1)</b></span>
+                        <span>TRUE (1) + TRUE (1) = <b>TRUE (1)</b></span>
+                        <span>FALSE (0) + FALSE (0) = <b>FALSE (0)</b></span>
+                    </div>
+                </div>
+
+                <div class="logic-op-card">
+                    <div class="logic-op-title">NOT:</div>
+                    <p class="logic-op-desc"><b>Reverse condition.</b> (Reverses 1 to 0, and 0 to 1.)</p>
+                    <div class="logic-op-examples">
+                        <span>NOT TRUE (1) = <b>FALSE (0)</b></span>
+                        <span>NOT FALSE (0) = <b>TRUE (1)</b></span>
+                    </div>
+                </div>
+
+                <div class="logic-op-card highlight-op">
+                    <div class="logic-op-title">XOR: <small>(Exclusive OR)</small></div>
+                    <p class="logic-op-desc"><b>Exactly one condition required.</b> (TRUE only if inputs differ.)</p>
+                    <div class="logic-op-examples">
+                        <span>TRUE (1) + FALSE (0) = <b>TRUE (1)</b></span>
+                        <span>TRUE (1) + TRUE (1) = <b>FALSE (0)</b></span>
+                        <span>FALSE (0) + FALSE (0) = <b>FALSE (0)</b></span>
+                    </div>
+                </div>
+
+                <div class="logic-op-card highlight-op">
+                    <div class="logic-op-title">NAND: <small>(Opposite of AND)</small></div>
+                    <p class="logic-op-desc"><b>Anything except both.</b> (TRUE unless both inputs are TRUE.)</p>
+                    <div class="logic-op-examples">
+                        <span>TRUE (1) + FALSE (0) = <b>TRUE (1)</b></span>
+                        <span>FALSE (0) + FALSE (0) = <b>TRUE (1)</b></span>
+                        <span>TRUE (1) + TRUE (1) = <b>FALSE (0)</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bomb Tech Visor (Inspection Optics Overlay — Interactive Pass-Through by Default) -->
+    <div id="bomb-tech-visor-overlay" class="bomb-tech-visor-overlay" aria-hidden="true" style="display: none;">
+        <!-- Optional Focus Inspection Mode Backdrop (Only active when Focus Mode is enabled) -->
+        <div id="bomb-tech-visor-backdrop" class="bomb-tech-visor-backdrop" style="display: none;"></div>
+
+        <!-- Circular Tactical Magnifier Lens -->
+        <div id="bomb-tech-visor-lens" class="bomb-tech-visor-lens">
+            <div id="visor-optical-viewport" class="visor-optical-viewport">
+                <div id="visor-mirror-stage" class="visor-mirror-stage"></div>
+            </div>
+
+            <!-- Industrial HUD Reticle, Scanlines & Telemetry Overlay -->
+            <div class="visor-scanlines"></div>
+            <div class="visor-reticle-ring">
+                <span class="reticle-tick tick-n"></span>
+                <span class="reticle-tick tick-e"></span>
+                <span class="reticle-tick tick-s"></span>
+                <span class="reticle-tick tick-w"></span>
+                <span class="reticle-crosshair"></span>
+            </div>
+
+            <div class="visor-top-tag">
+                <span id="visor-hud-mag-readout">DBP OPTICS // 2.0x</span>
+                <span id="visor-hud-coords">X:0480 Y:0320</span>
+            </div>
+
+            <div class="visor-bottom-tag">
+                <span id="visor-hud-target-readout" class="visor-target-label">PASS-THROUGH OPTICS READY</span>
+                <span class="visor-subhint">(+ / - adjust zoom)</span>
+                <span class="visor-subhint">(M or Esc to deactivate)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Toast Notification -->
+    <div id="achievement-toast" class="achievement-toast"></div>
+
+    <!-- Department of Boom Prevention Personnel Intake Modal (First Launch / Call Sign Prompt) -->
+    <div id="operator-registration-modal" class="logic-ref-modal operator-modal" aria-hidden="true">
+        <div class="logic-ref-dialog operator-modal-dialog">
+            <div class="logic-ref-header">
+                <div>
+                    <span class="logic-ref-tag">DEPARTMENT OF BOOM PREVENTION PERSONNEL RECORD // FORM DBP-ID</span>
+                    <h3>ENTER TECHNICIAN CALL SIGN</h3>
+                </div>
+            </div>
+
+            <p class="operator-modal-flavor">
+                Welcome to the <b>Department of Boom Prevention</b>. For HR liability waivers,
+                official leaderboard telemetry, and accidental crater attribution, please register
+                your <b>Operator Name / Call Sign</b> below.
+            </p>
+
+            <div class="operator-modal-form">
+                <label for="modal-operator-name-input" class="operator-modal-label">
+                    Operator designation:
+                </label>
+                <div class="operator-modal-input-row">
+                    <input
+                        id="modal-operator-name-input"
+                        type="text"
+                        maxlength="24"
+                        class="opt-input operator-modal-input"
+                        placeholder="Enter Technician Call Sign"
+                        autocomplete="off"
+                    />
+                    <button id="btn-modal-random-callsign" class="btn-secondary" type="button">
+                        🎲 ASSIGN RANDOM CALL SIGN
+                    </button>
+                </div>
+                <small class="operator-modal-hint">
+                    Your Operator Call Sign can be updated anytime directly on the Main Menu or in Options, and automatically updates all your leaderboard submissions.
+                </small>
+            </div>
+
+            <div class="operator-modal-actions">
+                <button id="btn-confirm-operator-modal" class="btn-primary btn-large-deploy" type="button">
+                    ✓ FILE PERSONNEL RECORD &amp; CONFIRM CALL SIGN
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Engine Configuration & Services -->
+    <script src="./assets/js/core/config.js"></script>
+    <script src="./assets/js/content/universe.js"></script>
+    <script src="./assets/js/content/dispatch-data.js"></script>
+    <script src="./assets/js/content/briefings-data.js"></script>
+    <script src="./assets/js/content/reports-data.js"></script>
+    <script src="./assets/js/content/content-registry.js"></script>
+    <script src="./assets/js/core/storage.js"></script>
+    <script src="./assets/js/core/audio.js"></script>
+    <script src="./assets/js/core/leaderboard.js"></script>
+
+    <!-- Gameplay Systems -->
+    <script src="./assets/js/game/dispatch.js"></script>
+    <script src="./assets/js/game/modules.js"></script>
+    <script src="./assets/js/game/visor.js"></script>
+    <script src="./assets/js/game/game.js"></script>
+</body>
+</html>
