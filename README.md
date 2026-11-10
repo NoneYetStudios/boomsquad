@@ -159,3 +159,4 @@ New game content can be added without modifying the core state machine:
 
 Developed for **STF Arcade** and the **Department of Boom Prevention**.  
 All rights reserved. Unauthorized countdown appliances will be defused or relocated to the breakroom.
+MIT License © 2026 Anthony Moore / None Yet Studios
