@@ -49,6 +49,8 @@ All asset and script references use strictly relative paths (`./assets/...`, `./
 ```text
 boomsquad/
 ├── index.html                        # Main single-page application entry point
+├── favicon.svg                       # High-definition scalable SVG favicon (tactical bomb badge)
+├── favicon.ico                       # Standard 32x32 multi-platform fallback favicon
 ├── .htaccess                         # Root Apache server rules (security & routing)
 ├── .gitignore                        # Git ignore patterns for OS, IDE & temporary files
 ├── README.md                         # Project documentation and deployment guide
@@ -116,6 +118,7 @@ JetHost runs standard Linux-based cPanel hosting powered by Apache / LiteSpeed w
 1. **Package the Repository Files**:
    Ensure all files and folders are included:
    - `index.html`
+   - `favicon.svg` and `favicon.ico`
    - `.htaccess` *(make sure hidden dotfiles are visible in your file manager or FTP client)*
    - `assets/` (all subdirectories: `css/`, `js/`)
    - `api/` (including `api/.htaccess`)
